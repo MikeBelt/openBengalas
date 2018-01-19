@@ -11,6 +11,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -38,6 +39,7 @@ public class frmMain extends javax.swing.JFrame {
     public ifrmMantUsuarios  frmMantUsuarios;
     public ifrmDetalleEmergencia frmDetalleEmergencia;
     public ifrmParametros frmParametros;
+    public ifrmAbout frmAbout;
     private final static Logger log=Logger.getLogger(ifrmLogin.class);
     /**
      * Creates new form frmMain
@@ -78,8 +80,11 @@ public class frmMain extends javax.swing.JFrame {
     }
 //este es le metodo para mostrar la hora
     public String MostrarHora(){
+        SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
+        Date date=new Date();
+        String fecha= sdf.format(date);
         String hora = String.format("%TT", new Date()) ;
-        return hora;
+        return fecha+" "+hora;
     }
     
     public void configurarPantallas(JInternalFrame frm)
@@ -152,7 +157,7 @@ public class frmMain extends javax.swing.JFrame {
         jToolBar1.add(txtUsuario);
 
         jLabel2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jLabel2.setText("Fecha");
+        jLabel2.setText("Fecha:");
         jToolBar1.add(jLabel2);
 
         txtFechaHora.setEditable(false);
@@ -300,6 +305,11 @@ public class frmMain extends javax.swing.JFrame {
         mItemAbout.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
         mItemAbout.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         mItemAbout.setText("About BengalaPro");
+        mItemAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItemAboutActionPerformed(evt);
+            }
+        });
         jMenu3.add(mItemAbout);
 
         jMenuBar1.add(jMenu3);
@@ -320,9 +330,7 @@ public class frmMain extends javax.swing.JFrame {
         {
             frmLogin.show();
         }
-        
-        
-        
+
     }//GEN-LAST:event_mItemLogOnActionPerformed
 
     public void deshabilitarItemIniciarSesion(){
@@ -466,6 +474,18 @@ public class frmMain extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_mItemLonOffActionPerformed
+
+    private void mItemAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemAboutActionPerformed
+        // TODO add your handling code here:
+        if(this.frmAbout == null)
+        {
+             this.frmAbout= new ifrmAbout();
+             
+        }
+        
+        this.configurarPantallas(this.frmAbout);
+        this.frmAbout.renderizarLogos();
+    }//GEN-LAST:event_mItemAboutActionPerformed
 
     /**
      * @param args the command line arguments
