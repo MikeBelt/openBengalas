@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="BengalaProyectPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <class>main.clases.entidades.BglTbSector</class>
+    <class>main.clases.entidades.BglTbCatalogoincidentes</class>
+    <class>main.clases.entidades.BglTbTipodispositivo</class>
+    <class>main.clases.entidades.BglTbParametros</class>
+    <class>main.clases.entidades.BglTbTipoactividad</class>
+    <class>main.clases.entidades.BglTbEstadoemergencia</class>
+    <class>main.clases.entidades.BglTbCiudad</class>
+    <class>main.clases.entidades.BglTbTipoincidente</class>
+    <class>main.clases.entidades.BglTbTipositio</class>
+    <class>main.clases.entidades.BglTbSitioincidente</class>
+    <class>main.clases.entidades.BglTbUsuario</class>
+    <class>main.clases.entidades.BglTbDispositivo</class>
+    <class>main.clases.entidades.BglTbEmergencia</class>
+    <class>main.entidades.BglTbUsuario</class>
+    <class>main.entidades.BglTbSitioincidente</class>
+    <class>main.entidades.BglTbCiudad</class>
+    <class>main.entidades.BglTbSector</class>
+    <class>main.entidades.BglTbTipositio</class>
+    <class>main.entidades.BglTbTracking</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/db_bengala?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="pruebas"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="pruebas"/>
+    </properties>
+  </persistence-unit>
+</persistence>

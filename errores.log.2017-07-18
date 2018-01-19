@@ -1,0 +1,8 @@
+18 jul 2017 14:33:58,662 [ERROR] ifrmMantSitios:394 - illegal value
+18 jul 2017 14:38:51,246 [ERROR] ifrmMantSitios:394 - illegal value
+18 jul 2017 14:44:02,940 [ERROR] ifrmMantSitios:396 - For input string: "06:30:00"
+18 jul 2017 15:11:45,889 [ERROR] ifrmMantSitios:415 - illegal value
+18 jul 2017 15:56:36,648 [ERROR] ifrmMantSitios:135 - 1 >= 1
+18 jul 2017 15:58:36,459 [ERROR] ifrmMantSitios:135 - 0 >= 0
+18 jul 2017 16:02:05,671 [ERROR] ifrmMantSitios:135 - 1 >= 1
+18 jul 2017 18:01:40,309 [ERROR] ifrmMantDispositivos:216 - java.lang.NumberFormatException: empty String

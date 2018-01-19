@@ -1,0 +1,4 @@
+13 jul 2017 11:40:35,562 [ERROR] ifrmMantDispositivos:129 - java.lang.ClassCastException: java.lang.String cannot be cast to main.entidades.BglTbTipodispositivo
+13 jul 2017 14:53:06,026 [ERROR] ifrmMantSitios:205 - Error while committing the transaction
+13 jul 2017 15:16:10,607 [ERROR] ifrmMantSitios:214 - java.util.Date cannot be cast to java.sql.Date
+13 jul 2017 15:17:51,023 [ERROR] ifrmMantSitios:214 - java.util.Date cannot be cast to java.sql.Date

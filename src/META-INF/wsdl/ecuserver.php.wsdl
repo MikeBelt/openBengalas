@@ -1,0 +1,141 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="urn:WebServiceControllerwsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" name="WebServiceController" targetNamespace="urn:WebServiceControllerwsdl">
+
+<wsdl:message name="newEmergencyRequest">
+
+<wsdl:part name="data" type="xsd:string"/>
+
+</wsdl:message>
+
+<wsdl:message name="newEmergencyResponse">
+
+<wsdl:part name="return" type="xsd:string"/>
+
+</wsdl:message>
+
+<wsdl:message name="getStatusRequest">
+
+<wsdl:part name="data" type="xsd:string"/>
+
+</wsdl:message>
+
+<wsdl:message name="getStatusResponse">
+
+<wsdl:part name="return" type="xsd:int"/>
+
+</wsdl:message>
+
+<wsdl:message name="setCanceladoRequest">
+
+<wsdl:part name="data" type="xsd:string"/>
+
+</wsdl:message>
+
+<wsdl:message name="setCanceladoResponse">
+
+<wsdl:part name="return" type="xsd:string"/>
+
+</wsdl:message>
+
+<wsdl:portType name="WebServiceControllerPortType">
+
+<wsdl:operation name="newEmergency">
+
+<wsdl:documentation/>
+
+<wsdl:input message="tns:newEmergencyRequest"/>
+
+<wsdl:output message="tns:newEmergencyResponse"/>
+
+</wsdl:operation>
+
+<wsdl:operation name="getStatus">
+
+<wsdl:documentation/>
+
+<wsdl:input message="tns:getStatusRequest"/>
+
+<wsdl:output message="tns:getStatusResponse"/>
+
+</wsdl:operation>
+
+<wsdl:operation name="setCancelado">
+
+<wsdl:documentation/>
+
+<wsdl:input message="tns:setCanceladoRequest"/>
+
+<wsdl:output message="tns:setCanceladoResponse"/>
+
+</wsdl:operation>
+
+</wsdl:portType>
+
+<wsdl:binding name="WebServiceControllerBinding" type="tns:WebServiceControllerPortType">
+
+<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+<wsdl:operation name="newEmergency">
+
+<soap:operation soapAction="urn:WebServiceControllerwsdl#newEmergency" style="rpc"/>
+
+<wsdl:input>
+
+<soap:body use="encoded" namespace="urn:WebServiceControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+</wsdl:input>
+
+<wsdl:output>
+
+<soap:body use="encoded" namespace="urn:WebServiceControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+</wsdl:output>
+
+</wsdl:operation>
+
+<wsdl:operation name="getStatus">
+
+<soap:operation soapAction="urn:WebServiceControllerwsdl#getStatus" style="rpc"/>
+
+<wsdl:input>
+
+<soap:body use="encoded" namespace="urn:WebServiceControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+</wsdl:input>
+
+<wsdl:output>
+
+<soap:body use="encoded" namespace="urn:WebServiceControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+</wsdl:output>
+
+</wsdl:operation><wsdl:operation name="setCancelado">
+
+<soap:operation soapAction="urn:WebServiceControllerwsdl#setCancelado" style="rpc"/>
+
+<wsdl:input>
+
+<soap:body use="encoded" namespace="urn:WebServiceControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+</wsdl:input>
+
+<wsdl:output>
+
+<soap:body use="encoded" namespace="urn:WebServiceControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+</wsdl:output>
+
+</wsdl:operation>
+
+</wsdl:binding>
+
+<wsdl:service name="WebServiceControllerService">
+
+<wsdl:port name="WebServiceControllerPort" binding="tns:WebServiceControllerBinding">
+
+<soap:address location="http://190.214.21.188:8082/ecuservicespublicTest/ecuserver.php"/>
+
+</wsdl:port>
+
+</wsdl:service>
+
+</definitions>
