@@ -138,7 +138,7 @@ public class frmMain extends javax.swing.JFrame {
         mItemAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Bengala Proyect");
+        setTitle("Open Bengalas 1.0.0 [Open Branch Engine Alarm System]");
         setIconImage(getIconImage());
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
@@ -231,7 +231,7 @@ public class frmMain extends javax.swing.JFrame {
 
         mItemEmergencias.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.ALT_MASK));
         mItemEmergencias.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
-        mItemEmergencias.setText("Listado de Emergencias");
+        mItemEmergencias.setText("Monitor de Emergencias");
         mItemEmergencias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mItemEmergenciasActionPerformed(evt);
@@ -372,6 +372,8 @@ public class frmMain extends javax.swing.JFrame {
                 frmEmergencias=new ifrmEmergencias(this.factory,this);
             
             configurarPantallas(frmEmergencias);
+            
+            frmEmergencias.renderizarLogos();
         }
             
         

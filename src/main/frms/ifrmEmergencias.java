@@ -5,10 +5,13 @@
  */
 package main.frms;
 
+import java.awt.Image;
 import main.controladores.BglTbCiudadJpaController;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import main.controladores.BglTbCatalogoincidentesJpaController;
@@ -59,8 +62,28 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
         llenarComboCatalogo();
         crearModeloEmergencia();
         llenarTablaEmergencias();
+        
     }
 
+    public void renderizarLogos()
+    {
+        try
+        {
+        
+        ImageIcon img=new ImageIcon("src/main/img/sirena-alarma.gif");
+        Icon icon=new ImageIcon(img.getImage().getScaledInstance(jlbImagenSirena.getWidth(),jlbImagenSirena.getHeight() , Image.SCALE_DEFAULT));
+        jlbImagenSirena.setIcon(icon);
+        
+
+        this.repaint();
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(this,"Error al renderizar logos");
+            System.out.println("Error al renderizar logos: "+ex.getMessage());
+        }
+    }
+    
    DefaultComboBoxModel dcmCiudad;
     private void llenarComboCiudades(){
    
@@ -275,6 +298,7 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
         cbCatalogoEmergencia = new javax.swing.JComboBox<>();
         dcFechaInic = new com.toedter.calendar.JDateChooser();
         dcFechaFin = new com.toedter.calendar.JDateChooser();
+        jlbImagenSirena = new javax.swing.JLabel();
         jpListadoEmergencias1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtEmergencias = new javax.swing.JTable();
@@ -298,30 +322,30 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("al");
-        jpAcciones.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, 20, -1));
+        jpAcciones.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 20, -1));
 
         jLabel2.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Ciudad");
         jLabel2.setToolTipText("");
-        jpAcciones.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, -1, -1));
+        jpAcciones.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
 
         cbCiudad.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
-        jpAcciones.add(cbCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 150, -1));
+        jpAcciones.add(cbCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 150, -1));
 
         jLabel3.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Fecha Incidente");
-        jpAcciones.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, -1));
+        jpAcciones.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Sector");
         jLabel4.setToolTipText("");
-        jpAcciones.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, -1, -1));
+        jpAcciones.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, -1, -1));
 
         cbSector.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
-        jpAcciones.add(cbSector, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 50, 150, -1));
+        jpAcciones.add(cbSector, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 150, -1));
 
         jLabel5.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -334,12 +358,12 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
 
         jLabel6.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Estado de la emergencia");
+        jLabel6.setText("Estado de la emergencia:");
         jLabel6.setToolTipText("");
-        jpAcciones.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 80, 140, -1));
+        jpAcciones.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, 140, -1));
 
         cbEstado.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
-        jpAcciones.add(cbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 80, 120, -1));
+        jpAcciones.add(cbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, 120, -1));
 
         jLabel7.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -349,10 +373,14 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
         jpAcciones.add(cbCatalogoEmergencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 210, -1));
 
         dcFechaInic.setDateFormatString("yyyy-MMM-dd");
-        jpAcciones.add(dcFechaInic, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
+        jpAcciones.add(dcFechaInic, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
 
         dcFechaFin.setDateFormatString("yyyy-MMM-dd");
-        jpAcciones.add(dcFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, -1, -1));
+        jpAcciones.add(dcFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
+
+        jlbImagenSirena.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/sirena-alarma.gif"))); // NOI18N
+        jlbImagenSirena.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jpAcciones.add(jlbImagenSirena, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 20, 250, 90));
 
         jpListadoEmergencias1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Eventos de emergencias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
         jpListadoEmergencias1.setOpaque(false);
@@ -466,6 +494,7 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel jlbImagenSirena;
     private javax.swing.JPanel jpAcciones;
     private javax.swing.JPanel jpListadoEmergencias;
     private javax.swing.JPanel jpListadoEmergencias1;
