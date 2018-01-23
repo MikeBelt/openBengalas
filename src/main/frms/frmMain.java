@@ -5,9 +5,14 @@
  */
 package main.frms;
 
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
@@ -21,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import main.entidades.BglTbUsuario;
+import main.hilos.hiloVerificaEmergencia;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -41,11 +47,14 @@ public class frmMain extends javax.swing.JFrame {
     public ifrmParametros frmParametros;
     public ifrmAbout frmAbout;
     private final static Logger log=Logger.getLogger(ifrmLogin.class);
+    public hiloVerificaEmergencia hiloEmergencia;
+    
     /**
      * Creates new form frmMain
      */
     public frmMain() {
         initComponents();
+        //inicializando logger
         PropertyConfigurator.configure("log4j.properties");
         //pintar frame
         //this.setBackground(Color.DARK_GRAY);
@@ -53,12 +62,17 @@ public class frmMain extends javax.swing.JFrame {
         this.jdesktop.setBackground(Color.darkGray);
         //seteando img de fondo
         //this.jdesktop.setBorder(new ImagenFondo());
-        
+        this.mostrarNotificacion("Iniciando...");
+        //inicializando factoria de persistencia
         this.factory=Persistence.createEntityManagerFactory("BengalaProyectPU");
+        //maximizando pantalla
         this.setExtendedState(frmMain.MAXIMIZED_BOTH);
         //inicializando la hora
         this.HoraActual();
-        
+        //inicializando hilo de consulta emergencias
+        this.hiloEmergencia=new hiloVerificaEmergencia();
+        this.hiloEmergencia.main=this;
+        this.hiloEmergencia.start();
     }
     
     public void verDatosUsuarioSesion()
@@ -78,7 +92,8 @@ public class frmMain extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e){txtFechaHora.setText(MostrarHora());}});
         timer.start();
     }
-//este es le metodo para mostrar la hora
+    
+    //este es le metodo para mostrar la fecha-hora
     public String MostrarHora(){
         SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
         Date date=new Date();
@@ -102,6 +117,68 @@ public class frmMain extends javax.swing.JFrame {
         {
             System.out.println("Error al posicionar el internalFrame");
         }
+    }
+    
+    public void mostrarNotificacion(String mensaje){
+    try{
+        TrayIcon icono = new TrayIcon(getImagen(),"Open Bengalas",crearMenu());
+        SystemTray.getSystemTray().add(icono);
+//        Thread.sleep(5000);
+        
+        icono.displayMessage("Open Bengalas", mensaje, TrayIcon.MessageType.INFO);
+    }catch(AWTException ex){log.error(ex.getMessage());}
+    }
+    
+     public static Image getImagen() {
+        URL imageURL=frmMain.class.getResource("/main/img/16x16-png-antena.png");
+        return (new ImageIcon(imageURL,"OpenBengalas - TrayIcon")).getImage();
+    }
+    
+
+    public  PopupMenu crearMenu(){
+        PopupMenu menu = new PopupMenu();
+        MenuItem salir = new MenuItem("Salir");
+        salir.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                System.exit(0);
+            }
+        });
+        MenuItem monitor = new MenuItem("Monitor Emergencias");
+        monitor.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                //lo que hace el boton
+                if(verificarSesion())
+                {
+                    if(frmEmergencias==null)
+                        instanciaPantallaEmergencia();
+
+                    configurarPantallas(frmEmergencias);
+
+                    frmEmergencias.renderizarLogos();
+                }
+                        
+            }
+        });
+        menu.add(salir);
+        menu.add(monitor);
+        return menu;
+    }
+    
+    public void instanciaPantallaEmergencia()
+    {
+        frmEmergencias=new ifrmEmergencias(this.factory,this);
+    }
+    
+    public void sonarAlarma()
+    {
+        if(frmEmergencias==null)
+            instanciaPantallaEmergencia();
+        
+        configurarPantallas(frmEmergencias);
+        frmEmergencias.renderizarLogos();
+        frmEmergencias.iniciarAlarma();
     }
     
     /**
@@ -140,6 +217,11 @@ public class frmMain extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Open Bengalas 1.0.0 [Open Branch Engine Alarm System]");
         setIconImage(getIconImage());
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
         jToolBar1.setFloatable(false);
@@ -364,7 +446,7 @@ public class frmMain extends javax.swing.JFrame {
     }
     
     private void mItemEmergenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemEmergenciasActionPerformed
-        // TODO add your handling code here:
+        
         //verificar usuario en sesión
         if(verificarSesion())
         {
@@ -488,6 +570,13 @@ public class frmMain extends javax.swing.JFrame {
         this.configurarPantallas(this.frmAbout);
         this.frmAbout.renderizarLogos();
     }//GEN-LAST:event_mItemAboutActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        if(this.hiloEmergencia.isAlive())
+        {
+            this.hiloEmergencia.parar();
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

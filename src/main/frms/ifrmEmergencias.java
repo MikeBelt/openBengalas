@@ -28,6 +28,7 @@ import main.entidades.BglTbSector;
 import main.entidades.BglTbTipoincidente;
 import main.entidades.BglTbTracking;
 import main.entidades.BglTbUsuario;
+import main.hilos.hiloSonido;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -43,6 +44,7 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
     private BglTbEmergenciaJpaController controladorEmergencia;
     private BglTbEmergencia emergencia;
     private final static Logger log=Logger.getLogger(ifrmLogin.class);
+    private hiloSonido hiloAlarma;
     
     /**
      * Creates new form ifrmEmergencias
@@ -74,6 +76,7 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
         Icon icon=new ImageIcon(img.getImage().getScaledInstance(jlbImagenSirena.getWidth(),jlbImagenSirena.getHeight() , Image.SCALE_DEFAULT));
         jlbImagenSirena.setIcon(icon);
         
+            mostrarGifAlarma(false);
 
         this.repaint();
         }
@@ -82,6 +85,11 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this,"Error al renderizar logos");
             System.out.println("Error al renderizar logos: "+ex.getMessage());
         }
+    }
+    
+    public void mostrarGifAlarma(boolean mostrar)
+    {
+        jlbImagenSirena.setVisible(mostrar);
     }
     
    DefaultComboBoxModel dcmCiudad;
@@ -227,6 +235,7 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
        this.main.configurarPantallas(detalleEm);
        detalleEm.emergencia=this.emergencia; 
        detalleEm.mostrarDatosEmergencia();
+       detalleEm.renderizarLogos();
        
    }
    
@@ -299,6 +308,8 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
         dcFechaInic = new com.toedter.calendar.JDateChooser();
         dcFechaFin = new com.toedter.calendar.JDateChooser();
         jlbImagenSirena = new javax.swing.JLabel();
+        jbtnDesactivarAlarma = new javax.swing.JButton();
+        jbtnActivarAlarma = new javax.swing.JButton();
         jpListadoEmergencias1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtEmergencias = new javax.swing.JTable();
@@ -381,6 +392,22 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
         jlbImagenSirena.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/sirena-alarma.gif"))); // NOI18N
         jlbImagenSirena.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jpAcciones.add(jlbImagenSirena, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 20, 250, 90));
+
+        jbtnDesactivarAlarma.setText("Desactivar Alarma");
+        jbtnDesactivarAlarma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnDesactivarAlarmaActionPerformed(evt);
+            }
+        });
+        jpAcciones.add(jbtnDesactivarAlarma, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 110, 120, -1));
+
+        jbtnActivarAlarma.setText("Activar Alarma");
+        jbtnActivarAlarma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnActivarAlarmaActionPerformed(evt);
+            }
+        });
+        jpAcciones.add(jbtnActivarAlarma, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 110, 120, -1));
 
         jpListadoEmergencias1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Eventos de emergencias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
         jpListadoEmergencias1.setOpaque(false);
@@ -466,6 +493,37 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
         seleccionarEmergencia();
     }//GEN-LAST:event_jtEmergenciasMouseClicked
 
+    public void pararAlarma()
+    {
+        this.jlbImagenSirena.setVisible(false);
+        if(this.hiloAlarma!=null)
+        {
+            this.hiloAlarma.parar();
+            this.hiloAlarma.stop();
+        }
+    }
+    
+    private void jbtnDesactivarAlarmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDesactivarAlarmaActionPerformed
+        pararAlarma();
+    }//GEN-LAST:event_jbtnDesactivarAlarmaActionPerformed
+
+    public void iniciarAlarma()
+    {
+        this.jlbImagenSirena.setVisible(true);
+        String rutaArchivo="C:\\Users\\michael.beltran\\Documents\\NetBeansProjects\\BengalaProyect\\src\\main\\media\\alarma1.wav";
+        this.hiloAlarma = new hiloSonido(rutaArchivo);
+        
+        if(this.hiloAlarma!=null)
+        {
+            this.hiloAlarma.start();
+        }
+    }
+    
+    private void jbtnActivarAlarmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnActivarAlarmaActionPerformed
+        
+        iniciarAlarma();
+    }//GEN-LAST:event_jbtnActivarAlarmaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.persistence.EntityManager BengalaProyectPUEntityManager;
@@ -494,6 +552,8 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton jbtnActivarAlarma;
+    private javax.swing.JButton jbtnDesactivarAlarma;
     private javax.swing.JLabel jlbImagenSirena;
     private javax.swing.JPanel jpAcciones;
     private javax.swing.JPanel jpListadoEmergencias;

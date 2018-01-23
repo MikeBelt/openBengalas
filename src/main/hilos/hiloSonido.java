@@ -11,7 +11,9 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import main.frms.frmMain;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 /**
  *
@@ -22,12 +24,14 @@ public class hiloSonido extends Thread{
     private Clip sonido;
     private boolean seguir;
     private final static Logger log=Logger.getLogger(hiloSonido.class);       
-       
+    public frmMain main;   
  
     public hiloSonido(String rutaArchivo){
-          
+
           seguir=true;
           try {
+              
+              PropertyConfigurator.configure("log4j.properties");
               sonido = AudioSystem.getClip();
               sonido.open(AudioSystem.getAudioInputStream(new File(rutaArchivo)));
                
@@ -48,8 +52,10 @@ public class hiloSonido extends Thread{
       @Override
        public void run(){
              
-          sonido.start();
-             
+//          sonido.start();
+//          sonido.loop(7);
+          sonido.loop(Clip.LOOP_CONTINUOUSLY);
+          
           // Espera mientras se esté reproduciendo.
           do{
               try {
@@ -60,7 +66,7 @@ public class hiloSonido extends Thread{
                
           }while (seguir && sonido.isActive());
            
-          if(sonido.isActive()){
+          if(sonido.isActive() || sonido.isRunning()){
               sonido.stop();
           }
            
@@ -72,6 +78,10 @@ public class hiloSonido extends Thread{
        
       public void parar(){
           seguir=false;
+          
+          if(sonido.isActive() || sonido.isRunning()){
+              sonido.stop();
+          }
       }
     
     

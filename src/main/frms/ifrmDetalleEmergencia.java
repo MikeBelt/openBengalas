@@ -6,6 +6,7 @@
 package main.frms;
 
 import com.google.gson.Gson;
+import java.awt.Image;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.text.ParseException;
@@ -14,6 +15,8 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import main.controladores.BglTbCatalogoincidentesJpaController;
 import main.controladores.BglTbCiudadJpaController;
@@ -31,7 +34,11 @@ import main.entidades.BglTbUsuario;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import wsEcu911.WebServiceControllerService_Impl;
-
+import javax.xml.rpc.Stub;
+import javax.xml.rpc.ServiceException;
+import wsEcu911.WebServiceControllerPortType;
+import wsEcu911.WebServiceControllerPortType_Stub;
+import wsEcu911.WebServiceControllerService;
 
 
 /**
@@ -68,6 +75,25 @@ public class ifrmDetalleEmergencia extends javax.swing.JInternalFrame {
         
     }
 
+    public void renderizarLogos()
+    {
+        try
+        {
+        
+        ImageIcon img=new ImageIcon("src/main/img/logoecu911.png");
+        Icon icon=new ImageIcon(img.getImage().getScaledInstance(jlbLogoEcu.getWidth(),jlbLogoEcu.getHeight() , Image.SCALE_DEFAULT));
+        jlbLogoEcu.setIcon(icon);
+        
+
+        this.repaint();
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(this,"Error al renderizar logos");
+            System.out.println("Error al renderizar logos: "+ex.getMessage());
+        }
+    }
+    
     private void limpiarControles(){
     
        
@@ -260,16 +286,34 @@ aplicacion.exec("C:/Users/michael.beltran/Documents/Visual Studio 2010/Projects/
    private String nuevaEmergencia(String gson){
    
    String newEmergency = null ;    
-   
+   WebServiceControllerService ws;
+   WebServiceControllerPortType port;
+   WebServiceControllerPortType_Stub stub;
+
    try
    {
-       WebServiceControllerService_Impl ws=new WebServiceControllerService_Impl();
-       newEmergency = ws.getWebServiceControllerPort().newEmergency(gson);
+       
+       ws= new WebServiceControllerService_Impl();
+       port= ws.getWebServiceControllerPort();
+       
+       //autenticación
+        stub = (WebServiceControllerPortType_Stub) port;
+	stub._setProperty(Stub.USERNAME_PROPERTY, "ecuservices");
+	stub._setProperty(Stub.PASSWORD_PROPERTY, "Ecu911S3rv1c3s");
+       
+//      Call call = (Call) ...;
+//	call.setProperty(Call.USERNAME_PROPERTY, "wsuser");
+//	call.setProperty(Call.PASSWORD_PROPERTY, "wspwd");
+
+       newEmergency = port.newEmergency(gson);
    }
    catch(RemoteException ex){
        JOptionPane.showMessageDialog(this,"Ha ocurrido un error al generar la nueva emergencia");
        JOptionPane.showMessageDialog(this,ex.getMessage());
-   }   
+   }catch (ServiceException ex) {   
+       JOptionPane.showMessageDialog(this,"Ha ocurrido un error al generar la nueva emergencia");
+       JOptionPane.showMessageDialog(this,ex.getMessage());
+        }
   
    return newEmergency;
    }
@@ -277,15 +321,29 @@ aplicacion.exec("C:/Users/michael.beltran/Documents/Visual Studio 2010/Projects/
    private int getStatusEmergencia(String gson){
    
      int status=0;
+     WebServiceControllerService ws;
+     WebServiceControllerPortType port;
+     WebServiceControllerPortType_Stub stub;
      try
    {
-       WebServiceControllerService_Impl ws=new WebServiceControllerService_Impl();
-       status = ws.getWebServiceControllerPort().getStatus(gson);
+       
+       ws= new WebServiceControllerService_Impl();
+       port= ws.getWebServiceControllerPort();
+       
+       //autenticación
+        stub = (WebServiceControllerPortType_Stub) port;
+	stub._setProperty(Stub.USERNAME_PROPERTY, "ecuservices");
+	stub._setProperty(Stub.PASSWORD_PROPERTY, "Ecu911S3rv1c3s");
+        
+       status = port.getStatus(gson);
    }
    catch(RemoteException ex){
        JOptionPane.showMessageDialog(this,"Ha ocurrido un error al solicitar el status de la emergencia");
        JOptionPane.showMessageDialog(this,ex.getMessage());
-   }  
+   }    catch (ServiceException ex) {  
+       JOptionPane.showMessageDialog(this,"Ha ocurrido un error al solicitar el status de la emergencia");
+       JOptionPane.showMessageDialog(this,ex.getMessage());
+        }
      return status;
        
    }
@@ -293,15 +351,30 @@ aplicacion.exec("C:/Users/michael.beltran/Documents/Visual Studio 2010/Projects/
    private String setCanceladaEmergencia(String gson){
    
        String result=null;
+       WebServiceControllerService ws;
+       WebServiceControllerPortType port;
+       WebServiceControllerPortType_Stub stub;
        try
-   {
-       WebServiceControllerService_Impl ws=new WebServiceControllerService_Impl();
-       result = ws.getWebServiceControllerPort().setCancelado(gson);
-   }
-   catch(RemoteException ex){
-       JOptionPane.showMessageDialog(this,"Ha ocurrido un error al cancelar la emergencia");
-       JOptionPane.showMessageDialog(this,ex.getMessage());
-   }  
+       {
+        ws=new WebServiceControllerService_Impl();
+        port= ws.getWebServiceControllerPort();
+       
+        //autenticación
+        stub = (WebServiceControllerPortType_Stub) port;
+	stub._setProperty(Stub.USERNAME_PROPERTY, "ecuservices");
+	stub._setProperty(Stub.PASSWORD_PROPERTY, "Ecu911S3rv1c3s");
+        
+        result =port.setCancelado(gson);
+        
+        }
+        catch(RemoteException ex){
+            JOptionPane.showMessageDialog(this,"Ha ocurrido un error al cancelar la emergencia");
+            JOptionPane.showMessageDialog(this,ex.getMessage());
+        }
+        catch (ServiceException ex1) {  
+            JOptionPane.showMessageDialog(this,"Ha ocurrido un error al cancelar la emergencia");
+            JOptionPane.showMessageDialog(this,ex1.getMessage());
+        }
        
        return result;
        
@@ -311,6 +384,7 @@ aplicacion.exec("C:/Users/michael.beltran/Documents/Visual Studio 2010/Projects/
         if(this.emergencia!=null)
         {
             String cadenaJson=toJson(this.emergencia);
+            
             String result=nuevaEmergencia(cadenaJson);
             
             JOptionPane.showMessageDialog(this,"Resultado: "+result);
@@ -323,6 +397,7 @@ aplicacion.exec("C:/Users/michael.beltran/Documents/Visual Studio 2010/Projects/
        if(this.emergencia!=null)
         {
             String cadenaJson=toJson(this.emergencia);
+            
             String result=setCanceladaEmergencia(cadenaJson);
             
             JOptionPane.showMessageDialog(this,"Resultado: "+result);
@@ -337,6 +412,7 @@ aplicacion.exec("C:/Users/michael.beltran/Documents/Visual Studio 2010/Projects/
     if(this.emergencia!=null)
         {
             String cadenaJson=toJson(this.emergencia);
+            
             int result=getStatusEmergencia(cadenaJson);
             
             JOptionPane.showMessageDialog(this,"Resultado: "+result);
@@ -422,6 +498,7 @@ aplicacion.exec("C:/Users/michael.beltran/Documents/Visual Studio 2010/Projects/
         btnEnviar = new javax.swing.JButton();
         btnStatus = new javax.swing.JButton();
         btnCancelarEmergencia = new javax.swing.JButton();
+        jlbLogoEcu = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnMonitorear = new javax.swing.JButton();
@@ -600,28 +677,33 @@ aplicacion.exec("C:/Users/michael.beltran/Documents/Visual Studio 2010/Projects/
             }
         });
 
+        jlbLogoEcu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/logoecu911.png"))); // NOI18N
+        jlbLogoEcu.setToolTipText("");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jlbLogoEcu, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnCancelarEmergencia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnStatus, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEnviar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(btnEnviar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
+                .addComponent(jlbLogoEcu, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEnviar)
                 .addGap(6, 6, 6)
                 .addComponent(btnStatus)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCancelarEmergencia)
-                .addGap(27, 27, 27))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Operaciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Verdana", 1, 10), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -670,24 +752,26 @@ aplicacion.exec("C:/Users/michael.beltran/Documents/Visual Studio 2010/Projects/
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(14, 14, 14)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(42, 42, 42))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(158, 158, 158)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -710,7 +794,7 @@ aplicacion.exec("C:/Users/michael.beltran/Documents/Visual Studio 2010/Projects/
     }//GEN-LAST:event_btnMonitorearActionPerformed
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
-        // TODO add your handling code here:
+        
         enviarNuevaEmergencia();
     }//GEN-LAST:event_btnEnviarActionPerformed
 
@@ -764,6 +848,7 @@ aplicacion.exec("C:/Users/michael.beltran/Documents/Visual Studio 2010/Projects/
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jlabelNombre;
+    private javax.swing.JLabel jlbLogoEcu;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtDireccion;
