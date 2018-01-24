@@ -26,10 +26,11 @@ public final class hiloVerificaEmergencia extends Thread{
      public int totalEventos;
      public frmMain main;
      
-     public hiloVerificaEmergencia()
+     public hiloVerificaEmergencia(frmMain main)
      {
          try
          {
+             this.main=main;
              PropertyConfigurator.configure("log4j.properties");
              conexion=new conexionOracle("RASTRAC", "RASTRAC", "192.168.1.18", "GLTEVRAC",false , true);
              
@@ -58,7 +59,7 @@ public final class hiloVerificaEmergencia extends Thread{
             
             while(rs.next())
             {
-                result++;
+                result=rs.getInt(1);
             }
             
             log.debug("Eventos de emergencia encontrados:" + result);

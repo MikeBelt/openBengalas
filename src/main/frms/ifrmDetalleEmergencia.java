@@ -779,7 +779,7 @@ aplicacion.exec("C:/Users/michael.beltran/Documents/Visual Studio 2010/Projects/
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+        
         crearNuevaEmergencia();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -788,7 +788,7 @@ aplicacion.exec("C:/Users/michael.beltran/Documents/Visual Studio 2010/Projects/
     }//GEN-LAST:event_cbTipoEmergenciaActionPerformed
 
     private void btnMonitorearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMonitorearActionPerformed
-        // TODO add your handling code here:
+        
         ejecutaExe();
         
     }//GEN-LAST:event_btnMonitorearActionPerformed
@@ -799,18 +799,18 @@ aplicacion.exec("C:/Users/michael.beltran/Documents/Visual Studio 2010/Projects/
     }//GEN-LAST:event_btnEnviarActionPerformed
 
     private void btnStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatusActionPerformed
-        // TODO add your handling code here:
+        
         enviarStatusEmergencia();
         
     }//GEN-LAST:event_btnStatusActionPerformed
 
     private void btnCancelarEmergenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarEmergenciaActionPerformed
-        // TODO add your handling code here:
+        
         enviarCanceladoEmergencia();
     }//GEN-LAST:event_btnCancelarEmergenciaActionPerformed
 
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
-        // TODO add your handling code here:
+        
         this.main.frmDetalleEmergencia=null;
     }//GEN-LAST:event_formInternalFrameClosing
 

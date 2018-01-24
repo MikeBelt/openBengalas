@@ -1,0 +1,8 @@
+23 ene 2018 11:12:58,018 [ERROR] hiloSonido:36 - could not get audio input stream from input file
+23 ene 2018 11:13:06,334 [ERROR] hiloSonido:36 - could not get audio input stream from input file
+23 ene 2018 11:15:04,099 [ERROR] hiloSonido:36 - could not get audio input stream from input file
+23 ene 2018 11:15:20,445 [ERROR] hiloSonido:36 - could not get audio input stream from input file
+23 ene 2018 15:03:16,264 [ERROR] hiloVerificaEmergencia:42 - Listener refused the connection with the following error:
+ORA-12516, TNS:listener could not find available handler with matching protocol stack
+ 
+23 ene 2018 15:39:07,637 [ERROR] hiloVerificaEmergencia:66 - Conexión cerrada

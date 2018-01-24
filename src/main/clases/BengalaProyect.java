@@ -21,7 +21,7 @@ public class BengalaProyect {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
         PropertyConfigurator.configure("log4j.properties");
         
         frmMain desktop=new frmMain();

@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.ImageIcon;
@@ -26,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import main.entidades.BglTbUsuario;
+import main.hilos.hiloVentanaEspera;
 import main.hilos.hiloVerificaEmergencia;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -48,6 +50,7 @@ public class frmMain extends javax.swing.JFrame {
     public ifrmAbout frmAbout;
     private final static Logger log=Logger.getLogger(ifrmLogin.class);
     public hiloVerificaEmergencia hiloEmergencia;
+    public hiloVentanaEspera hiloEspera;
     
     /**
      * Creates new form frmMain
@@ -63,16 +66,22 @@ public class frmMain extends javax.swing.JFrame {
         //seteando img de fondo
         //this.jdesktop.setBorder(new ImagenFondo());
         this.mostrarNotificacion("Iniciando...");
-        //inicializando factoria de persistencia
-        this.factory=Persistence.createEntityManagerFactory("BengalaProyectPU");
         //maximizando pantalla
         this.setExtendedState(frmMain.MAXIMIZED_BOTH);
+        //inicializando hilo de ventana de espera
+        this.hiloEspera=new hiloVentanaEspera(this);
+        this.hiloEspera.start();
+        //inicializando factoria de persistencia
+        this.factory=Persistence.createEntityManagerFactory("BengalaProyectPU");
         //inicializando la hora
         this.HoraActual();
+        //parar el hilo de ventana de espera
+        this.hiloEspera.seguir(false);
+        this.hiloEspera.stop();
         //inicializando hilo de consulta emergencias
-        this.hiloEmergencia=new hiloVerificaEmergencia();
-        this.hiloEmergencia.main=this;
+        this.hiloEmergencia=new hiloVerificaEmergencia(this);
         this.hiloEmergencia.start();
+        
     }
     
     public void verDatosUsuarioSesion()
@@ -427,7 +436,7 @@ public class frmMain extends javax.swing.JFrame {
     }
     
     private void mItemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemSalirActionPerformed
-        // TODO add your handling code here:
+        
         System.exit(0);
     }//GEN-LAST:event_mItemSalirActionPerformed
 
@@ -450,12 +459,23 @@ public class frmMain extends javax.swing.JFrame {
         //verificar usuario en sesión
         if(verificarSesion())
         {
+            this.hiloEspera=new hiloVentanaEspera(this);
+            this.hiloEspera.seguir(true);
+            this.hiloEspera.start();
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+                log.error(ex.getMessage());
+            }
             if(frmEmergencias==null)
                 frmEmergencias=new ifrmEmergencias(this.factory,this);
             
             configurarPantallas(frmEmergencias);
             
             frmEmergencias.renderizarLogos();
+            
+            this.hiloEspera.seguir(false);
+            this.hiloEspera.stop();
         }
             
         

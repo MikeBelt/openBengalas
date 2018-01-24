@@ -43,7 +43,7 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
     private BglTbUsuario usuario;
     private BglTbEmergenciaJpaController controladorEmergencia;
     private BglTbEmergencia emergencia;
-    private final static Logger log=Logger.getLogger(ifrmLogin.class);
+    private final static Logger log=Logger.getLogger(ifrmEmergencias.class);
     private hiloSonido hiloAlarma;
     
     /**
