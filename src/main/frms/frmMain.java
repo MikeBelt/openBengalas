@@ -69,19 +69,26 @@ public class frmMain extends javax.swing.JFrame {
         //maximizando pantalla
         this.setExtendedState(frmMain.MAXIMIZED_BOTH);
         //inicializando hilo de ventana de espera
-        this.hiloEspera=new hiloVentanaEspera(this);
-        this.hiloEspera.start();
+//        this.hiloEspera=new hiloVentanaEspera(this);
+//        this.hiloEspera.start();
+        this.jpMensajeEspera.setVisible(false);
         //inicializando factoria de persistencia
         this.factory=Persistence.createEntityManagerFactory("BengalaProyectPU");
         //inicializando la hora
         this.HoraActual();
         //parar el hilo de ventana de espera
-        this.hiloEspera.seguir(false);
-        this.hiloEspera.stop();
+//        this.hiloEspera.seguir(false);
+//        this.hiloEspera.stop();
         //inicializando hilo de consulta emergencias
         this.hiloEmergencia=new hiloVerificaEmergencia(this);
         this.hiloEmergencia.start();
         
+    }
+    
+    public void setMensajeEspera(String mensaje)
+    {
+        this.jlbMensaje.setText(mensaje);
+        this.jlbMensaje.repaint();
     }
     
     public void verDatosUsuarioSesion()
@@ -121,6 +128,8 @@ public class frmMain extends javax.swing.JFrame {
             frm.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
             frm.setIconifiable(true);
             frm.show();
+            
+            jpMensajeEspera.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
         }
         catch(Exception e)
         {
@@ -138,7 +147,7 @@ public class frmMain extends javax.swing.JFrame {
     }catch(AWTException ex){log.error(ex.getMessage());}
     }
     
-     public static Image getImagen() {
+    public static Image getImagen() {
         URL imageURL=frmMain.class.getResource("/main/img/16x16-png-antena.png");
         return (new ImageIcon(imageURL,"OpenBengalas - TrayIcon")).getImage();
     }
@@ -205,6 +214,17 @@ public class frmMain extends javax.swing.JFrame {
         txtUsuario = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtFechaHora = new javax.swing.JTextField();
+        jpMensajeEspera = new javax.swing.JPanel();
+        jlbMensaje = new javax.swing.JLabel();
+        jlbGif = new javax.swing.JLabel();
+        jpMarcaAgua = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        lbNombreApp = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        lbNombreApp1 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mItemLogOn = new javax.swing.JMenuItem();
@@ -257,20 +277,103 @@ public class frmMain extends javax.swing.JFrame {
         txtFechaHora.setOpaque(false);
         jToolBar1.add(txtFechaHora);
 
+        jlbMensaje.setText("Cargando datos...");
+        jlbMensaje.setFocusable(false);
+        jlbMensaje.setRequestFocusEnabled(false);
+
+        jlbGif.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/25x25-gif-load.gif"))); // NOI18N
+
+        javax.swing.GroupLayout jpMensajeEsperaLayout = new javax.swing.GroupLayout(jpMensajeEspera);
+        jpMensajeEspera.setLayout(jpMensajeEsperaLayout);
+        jpMensajeEsperaLayout.setHorizontalGroup(
+            jpMensajeEsperaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 276, Short.MAX_VALUE)
+            .addGroup(jpMensajeEsperaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jpMensajeEsperaLayout.createSequentialGroup()
+                    .addGap(0, 78, Short.MAX_VALUE)
+                    .addComponent(jlbGif)
+                    .addGap(5, 5, 5)
+                    .addComponent(jlbMensaje)
+                    .addGap(0, 79, Short.MAX_VALUE)))
+        );
+        jpMensajeEsperaLayout.setVerticalGroup(
+            jpMensajeEsperaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 62, Short.MAX_VALUE)
+            .addGroup(jpMensajeEsperaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jpMensajeEsperaLayout.createSequentialGroup()
+                    .addGap(0, 18, Short.MAX_VALUE)
+                    .addGroup(jpMensajeEsperaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jlbGif)
+                        .addGroup(jpMensajeEsperaLayout.createSequentialGroup()
+                            .addGap(5, 5, 5)
+                            .addComponent(jlbMensaje)))
+                    .addGap(0, 19, Short.MAX_VALUE)))
+        );
+
+        jpMarcaAgua.setOpaque(false);
+        jpMarcaAgua.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/30x30-png-sputnik.png"))); // NOI18N
+        jLabel3.setOpaque(true);
+        jpMarcaAgua.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 30, 30));
+
+        lbNombreApp.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        lbNombreApp.setForeground(new java.awt.Color(255, 255, 255));
+        lbNombreApp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbNombreApp.setText("Open Branch Engine Alarm System");
+        jpMarcaAgua.add(lbNombreApp, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, -1, 30));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/camera-39x30.png"))); // NOI18N
+        jLabel4.setOpaque(true);
+        jpMarcaAgua.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, 40, 40));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/Config.png"))); // NOI18N
+        jLabel5.setOpaque(true);
+        jpMarcaAgua.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 90, 70));
+
+        lbNombreApp1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        lbNombreApp1.setForeground(new java.awt.Color(0, 0, 204));
+        lbNombreApp1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbNombreApp1.setText("Open Bengalas");
+        jpMarcaAgua.add(lbNombreApp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, 190, 30));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/40x28_ambulance_by_cycler.gif"))); // NOI18N
+        jLabel6.setOpaque(true);
+        jpMarcaAgua.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 40, 30));
+
+        jLabel7.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Versión 1.0.0");
+        jpMarcaAgua.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, 100, -1));
+
         jdesktop.setLayer(jToolBar1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdesktop.setLayer(jpMensajeEspera, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdesktop.setLayer(jpMarcaAgua, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jdesktopLayout = new javax.swing.GroupLayout(jdesktop);
         jdesktop.setLayout(jdesktopLayout);
         jdesktopLayout.setHorizontalGroup(
             jdesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdesktopLayout.createSequentialGroup()
-                .addGap(0, 13, Short.MAX_VALUE)
+                .addGap(0, 102, Short.MAX_VALUE)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdesktopLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jpMarcaAgua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jdesktopLayout.createSequentialGroup()
+                .addGap(190, 190, 190)
+                .addComponent(jpMensajeEspera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jdesktopLayout.setVerticalGroup(
             jdesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdesktopLayout.createSequentialGroup()
-                .addContainerGap(306, Short.MAX_VALUE)
+                .addContainerGap(75, Short.MAX_VALUE)
+                .addComponent(jpMarcaAgua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addComponent(jpMensajeEspera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(90, 90, 90)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -455,35 +558,42 @@ public class frmMain extends javax.swing.JFrame {
     }
     
     private void mItemEmergenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemEmergenciasActionPerformed
+//        this.jpMensajeEspera.setVisible(true);
+//        this.repaint();
         
         //verificar usuario en sesión
         if(verificarSesion())
         {
-            this.hiloEspera=new hiloVentanaEspera(this);
-            this.hiloEspera.seguir(true);
-            this.hiloEspera.start();
             try {
-                Thread.sleep(2000);
-            } catch (InterruptedException ex) {
+                Thread.sleep(3000);
+//            if(this.hiloEspera.isAlive())
+//                this.hiloEspera=new hiloVentanaEspera(this);
+//                this.hiloEspera.setPriority(9);
+//                this.hiloEspera.seguir(true);
+//                this.hiloEspera.start();
+                
+
+                if(frmEmergencias==null)
+                    frmEmergencias=new ifrmEmergencias(this.factory,this);
+
+                configurarPantallas(frmEmergencias);
+
+                frmEmergencias.renderizarLogos();
+                
+//                this.hiloEspera.seguir(false);
+//                this.hiloEspera.stop();
+
+            } catch (Exception ex) {
                 log.error(ex.getMessage());
             }
-            if(frmEmergencias==null)
-                frmEmergencias=new ifrmEmergencias(this.factory,this);
-            
-            configurarPantallas(frmEmergencias);
-            
-            frmEmergencias.renderizarLogos();
-            
-            this.hiloEspera.seguir(false);
-            this.hiloEspera.stop();
         }
             
-        
+//        this.jpMensajeEspera.setVisible(false);
         
     }//GEN-LAST:event_mItemEmergenciasActionPerformed
 
     private void mItemMantDispActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemMantDispActionPerformed
-        // TODO add your handling code here:
+        
         //verificar usuario en sesión
         if(verificarSesion())
         {
@@ -636,6 +746,11 @@ public class frmMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -645,6 +760,12 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
     public javax.swing.JDesktopPane jdesktop;
+    private javax.swing.JLabel jlbGif;
+    private javax.swing.JLabel jlbMensaje;
+    private javax.swing.JPanel jpMarcaAgua;
+    public javax.swing.JPanel jpMensajeEspera;
+    private javax.swing.JLabel lbNombreApp;
+    private javax.swing.JLabel lbNombreApp1;
     private javax.swing.JMenuItem mItemAbout;
     private javax.swing.JMenuItem mItemEmergencias;
     private javax.swing.JMenuItem mItemLogOn;

@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import main.frms.frmMain;
 import main.frms.ifrmEspera;
 import main.frms.jdialEspera;
+import main.frms.jpanelEspera;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -20,15 +21,17 @@ public class hiloVentanaEspera extends Thread{
     
     private boolean seguir;
     private final static Logger log=Logger.getLogger(hiloVentanaEspera.class);
-    public frmMain main;
-    jdialEspera ventana;
+    public frmMain ventana;
+//    jdialEspera ventana;
+//    jpanelEspera ventana;
+//    ifrmEspera ventana;
     
     public hiloVentanaEspera(frmMain main)
     {
         seguir=true;
         PropertyConfigurator.configure("log4j.properties");
         log.info("Nuevo hiloVentanaEspera");
-        this.main=main;
+        this.ventana=main;
     }
     
     
@@ -36,24 +39,30 @@ public class hiloVentanaEspera extends Thread{
     public void run()
     {
         try{
-            ventana=new jdialEspera(this.main,true);
-//            ifrmEspera ventana=new ifrmEspera(this.main);
+//            ventana=new jdialEspera(this.main,true);
+//            ventana= new jpanelEspera();
+//            ventana=new ifrmEspera(this.main);
 //            this.main.configurarPantallas(ventana);
-            ventana.show();
+//            
+//            ventana.setAutoRequestFocus(false);
+//            ventana.setFocusable(false);
+//            ventana.setFocusableWindowState(false);
+            
+            ventana.jpMensajeEspera.setVisible(true);
             
         do{
-            ventana.setMensaje("Cargando datos.");
+            ventana.setMensajeEspera("Cargando datos.");
             hiloVentanaEspera.sleep(2000);
-            ventana.setMensaje("Cargando datos..");
+            ventana.setMensajeEspera("Cargando datos..");
             hiloVentanaEspera.sleep(2000);
-            ventana.setMensaje("Cargando datos...");
+            ventana.setMensajeEspera("Cargando datos...");
             hiloVentanaEspera.sleep(2000);
             
         }while(seguir);
         
-        if(seguir==false && ventana.isShowing())
+        if(seguir==false && ventana.jpMensajeEspera.isShowing())
         {
-            ventana.dispose();
+            ventana.jpMensajeEspera.setVisible(true);
         }
         
         }catch(InterruptedException ex){log.error(ex.getMessage());}
@@ -67,9 +76,9 @@ public class hiloVentanaEspera extends Thread{
     {
         this.seguir=val;
         
-        if(seguir==false && ventana.isShowing())
+        if(seguir==false && ventana.jpMensajeEspera.isShowing())
         {
-            ventana.dispose();
+            ventana.jpMensajeEspera.setVisible(true);
         }
     }
     

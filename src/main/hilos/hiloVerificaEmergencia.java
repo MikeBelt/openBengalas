@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import main.clases.conexionOracle;
+import main.controladores.BglTbTrackingJpaController;
+import main.entidades.BglTbTracking;
 import main.frms.frmMain;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -49,7 +51,7 @@ public final class hiloVerificaEmergencia extends Thread{
      public int consultarEventosEmergencia()
      {
          int result=0;
-         String select="SELECT COUNT(*) FROM RASTRAC.EV_VEHICLESTATE WHERE EVENT=20 AND ALIAS IN('BL0134')";
+         String select="SELECT COUNT(*) FROM RASTRAC.EV_VEHICLESTATE WHERE EVENT=20 AND COD_CIUDAD=20 ";
          Statement st=null;
          ResultSet rs=null;
          try
@@ -86,6 +88,68 @@ public final class hiloVerificaEmergencia extends Thread{
          return result;
      }
      
+     public BglTbTracking getNuevoEventoEmergencia()
+     {
+         BglTbTracking evento=null;
+         Statement st=null;
+         ResultSet rs=null;
+         String select="SELECT * FROM RASTRAC.EV_VEHICLESTATE WHERE EVENT=20 AND COD_CIUDAD=20 AND ROWNUM=1 ORDER BY PC_DATE DESC , PC_TIME DESC";
+         try
+         {
+            evento=new BglTbTracking();
+            st= conexion.getCon().createStatement();
+            rs=st.executeQuery(select);
+            
+            while(rs.next())
+            {
+                evento.setAlias(rs.getString("ALIAS"));
+                evento.setVehicleId(rs.getString("VEHICLE_ID"));
+                evento.setAdvisories(rs.getString("ADVISORIES"));
+                evento.setAdvisoryEvent(rs.getString("ADVISORYEVENT"));
+                evento.setMonth(rs.getInt("MONTH"));
+                evento.setYear(rs.getInt("YEAR"));
+                evento.setDay(rs.getInt("DAY"));
+                evento.setDateTime(rs.getInt("DATE_TIME"));
+                evento.setGpstime(rs.getFloat("GPSTIME"));
+                evento.setStreet(rs.getString("STREET"));
+                evento.setLatitude(rs.getFloat("LATITUDE"));
+                evento.setLongitude(rs.getFloat("LONGITUDE"));
+                
+            }
+            
+         }
+         catch(SQLException se2)
+          {
+              
+              log.error(se2.getMessage());
+          }
+         finally
+         {
+             if(rs!=null)
+                try {
+                    rs.close();
+             } catch (SQLException ex) {
+                 log.error("Error al cerrar Result Set");
+             }
+         }
+         
+         return evento;
+     }
+     
+     public boolean insertarNuevoEventoEmergencia()
+     {
+         boolean val=false;
+         BglTbTrackingJpaController controler=new BglTbTrackingJpaController(main.factory);
+         BglTbTracking traking=this.getNuevoEventoEmergencia();
+         if(traking!=null)
+         {
+            controler.create(traking);
+            val=true;
+         }
+         
+         return val;
+     }
+     
      @Override
        public void run(){
 
@@ -102,6 +166,16 @@ public final class hiloVerificaEmergencia extends Thread{
                         log.info("Se ha generado un nuevo evento de emergencia...");
                         main.sonarAlarma();
                         this.totalEventos=result;
+                        
+                        //registrando en la base mysql el evento de emergencia
+                        if(insertarNuevoEventoEmergencia())
+                        {
+                            log.info("Nueva Emergencia Generada");
+                        }
+                        else
+                        {
+                            log.info("Se informó sobre la emergencia pero no se pudo registrar");
+                        }
                     }
                   //dormir el hilo por 2 segundos
                     Thread.sleep(2000);

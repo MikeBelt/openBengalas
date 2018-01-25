@@ -6,6 +6,7 @@
 package main.frms;
 
 import java.awt.Image;
+import java.util.Date;
 import main.controladores.BglTbCiudadJpaController;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
@@ -64,7 +65,9 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
         llenarComboCatalogo();
         crearModeloEmergencia();
         llenarTablaEmergencias();
-        
+        Date date=new Date();
+        this.dcFechaInic.setDate(date);
+        this.dcFechaFin.setDate(date);
     }
 
     public void renderizarLogos()
@@ -310,11 +313,12 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
         jlbImagenSirena = new javax.swing.JLabel();
         jbtnDesactivarAlarma = new javax.swing.JButton();
         jbtnActivarAlarma = new javax.swing.JButton();
-        jpListadoEmergencias1 = new javax.swing.JPanel();
+        jbtnFiltrar = new javax.swing.JButton();
+        jpListadoEmergencias = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtEmergencias = new javax.swing.JTable();
         btnEmergencia = new javax.swing.JButton();
-        jpListadoEmergencias = new javax.swing.JPanel();
+        jpActividadesEmergencias = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtActividades = new javax.swing.JTable();
 
@@ -371,23 +375,23 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Estado de la emergencia:");
         jLabel6.setToolTipText("");
-        jpAcciones.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, 140, -1));
+        jpAcciones.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, 170, 20));
 
         cbEstado.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
-        jpAcciones.add(cbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, 120, -1));
+        jpAcciones.add(cbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 110, 140, -1));
 
         jLabel7.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Catalogo");
-        jpAcciones.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
+        jpAcciones.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
 
-        jpAcciones.add(cbCatalogoEmergencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 210, -1));
+        jpAcciones.add(cbCatalogoEmergencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 210, -1));
 
         dcFechaInic.setDateFormatString("yyyy-MMM-dd");
-        jpAcciones.add(dcFechaInic, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
+        jpAcciones.add(dcFechaInic, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 110, -1));
 
         dcFechaFin.setDateFormatString("yyyy-MMM-dd");
-        jpAcciones.add(dcFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
+        jpAcciones.add(dcFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(255, 20, 120, -1));
 
         jlbImagenSirena.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/sirena-alarma.gif"))); // NOI18N
         jlbImagenSirena.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -409,9 +413,13 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
         });
         jpAcciones.add(jbtnActivarAlarma, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 110, 120, -1));
 
-        jpListadoEmergencias1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Eventos de emergencias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
-        jpListadoEmergencias1.setOpaque(false);
-        jpListadoEmergencias1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jbtnFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/16x16-filter-icon.png"))); // NOI18N
+        jbtnFiltrar.setText("Filtrar");
+        jpAcciones.add(jbtnFiltrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, -1, -1));
+
+        jpListadoEmergencias.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Eventos de emergencias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jpListadoEmergencias.setOpaque(false);
+        jpListadoEmergencias.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jtEmergencias.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jtEmergencias.setModel(new javax.swing.table.DefaultTableModel(
@@ -432,7 +440,7 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(jtEmergencias);
 
-        jpListadoEmergencias1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 20, 660, 160));
+        jpListadoEmergencias.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 20, 660, 160));
 
         btnEmergencia.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
         btnEmergencia.setText(">>");
@@ -441,11 +449,11 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
                 btnEmergenciaActionPerformed(evt);
             }
         });
-        jpListadoEmergencias1.add(btnEmergencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 80, 60, 30));
+        jpListadoEmergencias.add(btnEmergencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 80, 60, 30));
 
-        jpListadoEmergencias.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Actividades de emergencias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
-        jpListadoEmergencias.setOpaque(false);
-        jpListadoEmergencias.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jpActividadesEmergencias.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Actividades de emergencias", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jpActividadesEmergencias.setOpaque(false);
+        jpActividadesEmergencias.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jtActividades.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jtActividades.setModel(new javax.swing.table.DefaultTableModel(
@@ -461,24 +469,24 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jtActividades);
 
-        jpListadoEmergencias.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 20, 660, 120));
+        jpActividadesEmergencias.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 20, 660, 100));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jpAcciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jpListadoEmergencias1, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
-            .addComponent(jpListadoEmergencias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpListadoEmergencias, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
+            .addComponent(jpActividadesEmergencias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jpAcciones, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpListadoEmergencias1, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                .addComponent(jpListadoEmergencias, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpListadoEmergencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jpActividadesEmergencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -554,10 +562,11 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jbtnActivarAlarma;
     private javax.swing.JButton jbtnDesactivarAlarma;
+    private javax.swing.JButton jbtnFiltrar;
     private javax.swing.JLabel jlbImagenSirena;
     private javax.swing.JPanel jpAcciones;
+    private javax.swing.JPanel jpActividadesEmergencias;
     private javax.swing.JPanel jpListadoEmergencias;
-    private javax.swing.JPanel jpListadoEmergencias1;
     private javax.swing.JTable jtActividades;
     private javax.swing.JTable jtEmergencias;
     // End of variables declaration//GEN-END:variables

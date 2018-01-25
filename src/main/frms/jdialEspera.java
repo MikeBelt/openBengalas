@@ -16,7 +16,8 @@ public class jdialEspera extends javax.swing.JDialog {
      */
     public jdialEspera(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        this.setLocation((parent.getWidth()/2), (parent.getHeight()/2));
+//        this.setLocation((parent.getWidth()/2), (parent.getHeight()/2));
+        this.setLocation(550, 250);
         initComponents();
     }
     
@@ -39,10 +40,12 @@ public class jdialEspera extends javax.swing.JDialog {
         jlbMensaje = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setAlwaysOnTop(true);
         setAutoRequestFocus(false);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setFocusable(false);
+        setFocusableWindowState(false);
         setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        setLocation(new java.awt.Point(550, 250));
         setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
         setUndecorated(true);
         setResizable(false);
@@ -52,6 +55,8 @@ public class jdialEspera extends javax.swing.JDialog {
         getContentPane().add(jlbGif);
 
         jlbMensaje.setText("Cargando datos...");
+        jlbMensaje.setFocusable(false);
+        jlbMensaje.setRequestFocusEnabled(false);
         getContentPane().add(jlbMensaje);
 
         pack();
