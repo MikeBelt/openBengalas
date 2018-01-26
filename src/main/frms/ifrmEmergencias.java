@@ -518,7 +518,7 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
     public void iniciarAlarma()
     {
         this.jlbImagenSirena.setVisible(true);
-        String rutaArchivo="C:\\Users\\michael.beltran\\Documents\\NetBeansProjects\\BengalaProyect\\src\\main\\media\\alarma1.wav";
+        String rutaArchivo="C:\\openbengalas\\media\\alarma1.wav";
         this.hiloAlarma = new hiloSonido(rutaArchivo);
         
         if(this.hiloAlarma!=null)
