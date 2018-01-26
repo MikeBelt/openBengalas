@@ -18,7 +18,6 @@ import java.awt.event.ActionListener;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.ImageIcon;
@@ -57,6 +56,8 @@ public class frmMain extends javax.swing.JFrame {
      */
     public frmMain() {
         initComponents();
+        
+        try{
         //inicializando logger
         PropertyConfigurator.configure("log4j.properties");
         //pintar frame
@@ -82,7 +83,12 @@ public class frmMain extends javax.swing.JFrame {
         //inicializando hilo de consulta emergencias
         this.hiloEmergencia=new hiloVerificaEmergencia(this);
         this.hiloEmergencia.start();
-        
+        }
+        catch(Exception ex)
+        {
+            log.error(ex.getMessage());
+            JOptionPane.showMessageDialog(this,"Tenemos un problema:\n"+ex.getMessage());
+        }
     }
     
     public void setMensajeEspera(String mensaje)

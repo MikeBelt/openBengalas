@@ -1,13 +1,1 @@
-24 ene 2018 10:22:47,837 [ERROR] hiloVerificaEmergencia:70 - Índice de columna no válido
-24 ene 2018 10:22:48,077 [ERROR] hiloVerificaEmergencia:70 - Índice de columna no válido
-24 ene 2018 10:22:50,264 [ERROR] hiloVerificaEmergencia:70 - Índice de columna no válido
-24 ene 2018 10:22:52,436 [ERROR] hiloVerificaEmergencia:70 - Índice de columna no válido
-24 ene 2018 10:22:54,598 [ERROR] hiloVerificaEmergencia:70 - Índice de columna no válido
-24 ene 2018 10:22:56,765 [ERROR] hiloVerificaEmergencia:70 - Índice de columna no válido
-24 ene 2018 10:22:58,966 [ERROR] hiloVerificaEmergencia:70 - Índice de columna no válido
-24 ene 2018 10:23:01,125 [ERROR] hiloVerificaEmergencia:70 - Índice de columna no válido
-24 ene 2018 10:23:03,287 [ERROR] hiloVerificaEmergencia:70 - Índice de columna no válido
-24 ene 2018 10:23:05,447 [ERROR] hiloVerificaEmergencia:70 - Índice de columna no válido
-24 ene 2018 10:23:07,615 [ERROR] hiloVerificaEmergencia:70 - Índice de columna no válido
-24 ene 2018 10:23:09,777 [ERROR] hiloVerificaEmergencia:70 - Índice de columna no válido
-24 ene 2018 10:23:11,936 [ERROR] hiloVerificaEmergencia:70 - Índice de columna no válido
+26 ene 2018 14:39:49,481 [ERROR] ifrmLogin:89 - Unable to build entity manager factory
