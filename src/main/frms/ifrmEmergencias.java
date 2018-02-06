@@ -45,7 +45,7 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
     private BglTbEmergenciaJpaController controladorEmergencia;
     private BglTbEmergencia emergencia;
     private final static Logger log=Logger.getLogger(ifrmEmergencias.class);
-    private hiloSonido hiloAlarma;
+    private hiloSonido hiloAlarma=null;
     
     /**
      * Creates new form ifrmEmergencias
@@ -507,7 +507,9 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
         if(this.hiloAlarma!=null)
         {
             this.hiloAlarma.parar();
-            this.hiloAlarma.stop();
+            this.hiloAlarma=null;
+//            this.hiloAlarma.stop();
+            
         }
     }
     
@@ -519,12 +521,16 @@ public class ifrmEmergencias extends javax.swing.JInternalFrame {
     {
         this.jlbImagenSirena.setVisible(true);
         String rutaArchivo="C:\\openbengalas\\media\\alarma1.wav";
-        this.hiloAlarma = new hiloSonido(rutaArchivo);
-        
-        if(this.hiloAlarma!=null)
+        if(this.hiloAlarma==null)
         {
-            this.hiloAlarma.start();
+            this.hiloAlarma = new hiloSonido(rutaArchivo);
+            if(this.hiloAlarma!=null)
+            {
+                this.hiloAlarma.start();
+            }
+            
         }
+        
     }
     
     private void jbtnActivarAlarmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnActivarAlarmaActionPerformed

@@ -183,6 +183,7 @@ public class ifrmParametros extends javax.swing.JInternalFrame {
         });
 
         btnModificar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/16x16-png-edit-undo.png"))); // NOI18N
         btnModificar.setText("Actualizar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -231,8 +232,8 @@ public class ifrmParametros extends javax.swing.JInternalFrame {
                 .addContainerGap(97, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(173, 173, 173))
+                .addComponent(btnModificar)
+                .addGap(162, 162, 162))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

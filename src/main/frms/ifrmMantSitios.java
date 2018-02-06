@@ -539,6 +539,7 @@ public class ifrmMantSitios extends javax.swing.JInternalFrame {
         jPanel1.setOpaque(false);
 
         btnGuardar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/16x16-gif-save.gif"))); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.setEnabled(false);
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -548,6 +549,7 @@ public class ifrmMantSitios extends javax.swing.JInternalFrame {
         });
 
         btnModificar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/16x16-png-tools_icon.png"))); // NOI18N
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -556,6 +558,7 @@ public class ifrmMantSitios extends javax.swing.JInternalFrame {
         });
 
         btnEliminar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/icono_eliminar.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -564,6 +567,7 @@ public class ifrmMantSitios extends javax.swing.JInternalFrame {
         });
 
         btnNuevo.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/icononuevo.png"))); // NOI18N
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -587,7 +591,7 @@ public class ifrmMantSitios extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(80, Short.MAX_VALUE)
+                .addContainerGap(74, Short.MAX_VALUE)
                 .addComponent(btnModificar)
                 .addGap(5, 5, 5)
                 .addComponent(btnEliminar)

@@ -246,12 +246,15 @@ public class ifrmMantUsuarios extends javax.swing.JInternalFrame {
         });
 
         btnEliminar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/icono_eliminar.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
 
         btnModificar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/16x16-png-tools_icon.png"))); // NOI18N
         btnModificar.setText("Modificar");
 
         btnNuevo.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/icononuevo.png"))); // NOI18N
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -295,6 +298,7 @@ public class ifrmMantUsuarios extends javax.swing.JInternalFrame {
         jLabel4.setText("Id Usuario");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
+        txtId.setEditable(false);
         txtId.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
         jPanel2.add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 80, -1));
 

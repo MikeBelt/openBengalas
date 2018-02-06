@@ -52,10 +52,13 @@ public class hiloSonido extends Thread{
       @Override
        public void run(){
              
+            if(!sonido.isRunning()){
+
 //          sonido.start();
 //          sonido.loop(7);
-          sonido.loop(Clip.LOOP_CONTINUOUSLY);
-          
+            sonido.loop(Clip.LOOP_CONTINUOUSLY);
+            
+            }
           // Espera mientras se esté reproduciendo.
           do{
               try {

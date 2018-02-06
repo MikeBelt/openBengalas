@@ -410,6 +410,7 @@ public class ifrmMantDispositivos extends javax.swing.JInternalFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnGuardar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/16x16-gif-save.gif"))); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.setEnabled(false);
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -420,6 +421,7 @@ public class ifrmMantDispositivos extends javax.swing.JInternalFrame {
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 100, -1));
 
         btnModificar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/16x16-png-tools_icon.png"))); // NOI18N
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -429,6 +431,7 @@ public class ifrmMantDispositivos extends javax.swing.JInternalFrame {
         jPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 100, -1));
 
         btnEliminar.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/icono_eliminar.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -438,6 +441,7 @@ public class ifrmMantDispositivos extends javax.swing.JInternalFrame {
         jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 100, -1));
 
         btnNuevo.setFont(new java.awt.Font("Verdana", 1, 10)); // NOI18N
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/main/img/icononuevo.png"))); // NOI18N
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

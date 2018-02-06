@@ -47,6 +47,7 @@ public class frmMain extends javax.swing.JFrame {
     public ifrmDetalleEmergencia frmDetalleEmergencia;
     public ifrmParametros frmParametros;
     public ifrmAbout frmAbout;
+    public ifrmRegistroAtenciones frmRegistroAtenciones;
     private final static Logger log=Logger.getLogger(ifrmLogin.class);
     public hiloVerificaEmergencia hiloEmergencia;
     public hiloVentanaEspera hiloEspera;
@@ -239,6 +240,7 @@ public class frmMain extends javax.swing.JFrame {
         mItemSalir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         mItemEmergencias = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         mItemNuevaEmergencia = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         mItemMantDisp = new javax.swing.JMenuItem();
@@ -438,6 +440,16 @@ public class frmMain extends javax.swing.JFrame {
             }
         });
         jMenu2.add(mItemEmergencias);
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem1.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
+        jMenuItem1.setText("Registro y Consulta Atenciones Emergencia");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
 
         mItemNuevaEmergencia.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.ALT_MASK));
         mItemNuevaEmergencia.setFont(new java.awt.Font("Verdana", 0, 10)); // NOI18N
@@ -714,6 +726,16 @@ public class frmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+         if(this.frmRegistroAtenciones == null)
+        {
+             this.frmRegistroAtenciones= new ifrmRegistroAtenciones();
+             
+        }
+        
+        this.configurarPantallas(this.frmRegistroAtenciones);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -762,6 +784,7 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
